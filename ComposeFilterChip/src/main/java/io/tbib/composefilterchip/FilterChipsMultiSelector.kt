@@ -3,6 +3,7 @@ package io.tbib.composefilterchip
 import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.padding
@@ -26,6 +27,10 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun<T> FilterChipsMultiSelector(
     modifier: Modifier = Modifier,
+    modifierContent: Modifier = Modifier,
+    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
+    verticalArrangement: Arrangement.Vertical = Arrangement.Top,
+    maxItemsInEachRow: Int = Int.MAX_VALUE,
     listOfItems: List<T>,
     listOfItemsEnabled: List<Boolean> = listOfItems.map { true },
     colors: SelectableChipColors = FilterChipDefaults.elevatedFilterChipColors(),
@@ -40,7 +45,12 @@ fun<T> FilterChipsMultiSelector(
 
 ) {
     var selectedItems by rememberSaveable { mutableStateOf(listOf<T>()) }
-    FlowRow {
+    FlowRow(
+        modifier = modifier,
+        horizontalArrangement = horizontalArrangement,
+        verticalArrangement = verticalArrangement,
+        maxItemsInEachRow = maxItemsInEachRow
+    ) {
         listOfItems.forEach {
             ElevatedFilterChip(
                 enabled = listOfItemsEnabled[listOfItems.indexOf(it)],
@@ -52,7 +62,7 @@ fun<T> FilterChipsMultiSelector(
                         selectedItems - it
                     }
                     isSelected(it, selectedItems.contains(it)) },
-                modifier = modifier.padding(horizontal = 10.dp),
+                modifier = modifierContent.padding(horizontal = 10.dp),
                 selected = selectedItems.contains(it),
                 colors = colors,
                 shape =shape,

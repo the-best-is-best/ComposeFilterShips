@@ -15,50 +15,50 @@ java {
 
 
 afterEvaluate {
-tasks.withType<PublishToMavenLocal> {
+    tasks.withType<PublishToMavenLocal> {
 // Make 'publishReleasePublicationToMavenLocal' depend on 'assembleRelease'
-dependsOn("assembleRelease")
-}
-publishing {
+        dependsOn("assembleRelease")
+    }
+    publishing {
 
-publications.create<MavenPublication>("release") {
-    groupId = "io.github.the-best-is-best"
-    artifactId = "compose_filter_chips"
-    version = "1.0.0"
-    from(components["release"])
+        publications.create<MavenPublication>("release") {
+            groupId = "io.github.the-best-is-best"
+            artifactId = "compose_filter_chips"
+            version = "1.0.1"
+            from(components["release"])
 
 
 //  artifact("$buildDir/outputs/aar/ComposeQuill-release.aar")
 //artifact("$buildDir/libs/ComposeQuill-release.jar")
 // Provide artifacts information required by Maven Central
-    pom {
-        name.set("Compose Searchable Dropdown")
-        description.set("A Jetpack Compose Android Library to create a searchable dropdown.")
-        url.set("https://github.com/the-best-is-best/composeSearchableDropDown")
-        licenses {
-            license {
-                name.set("Apache-2.0")
-                url.set("https://opensource.org/licenses/Apache-2.0")
+            pom {
+                name.set("Compose Filter Chips")
+                description.set("A Jetpack Compose Android Library to create a filter chips.")
+                url.set("https://github.com/the-best-is-best/ComposeFilterShips")
+                licenses {
+                    license {
+                        name.set("Apache-2.0")
+                        url.set("https://opensource.org/licenses/Apache-2.0")
+                    }
+                }
+                issueManagement {
+                    system.set("Github")
+                    url.set("https://github.com/the-best-is-best/ComposeFilterShips/issues")
+                }
+                scm {
+                    connection.set("https://github.com/the-best-is-best/ComposeFilterShips.git")
+                    url.set("https://github.com/the-best-is-best/ComposeFilterShips")
+                }
+                developers {
+                    developer {
+                        id.set("MichelleRaouf")
+                        name.set("Michelle Raouf")
+                        email.set("eng.michelle.raouf@gmail.com")
+                    }
+                }
             }
         }
-        issueManagement {
-            system.set("Github")
-            url.set("https://github.com/the-best-is-best/composeSearchableDropDown/issues")
-        }
-        scm {
-            connection.set("https://github.com/the-best-is-best/composeSearchableDropDown.git")
-            url.set("https://github.com/the-best-is-best/composeSearchableDropDown")
-        }
-        developers {
-            developer {
-                id.set("MichelleRaouf")
-                name.set("Michelle Raouf")
-                email.set("eng.michelle.raouf@gmail.com")
-            }
-        }
-    }
-}
-repositories {
+        repositories {
 //            maven {
 //                name = "OSSRH-snapshots"
 //                url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
@@ -68,14 +68,14 @@ repositories {
 //                }
 //            }
 
-maven {
-name = "OSSRH"
-url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-credentials {
-username = System.getenv("MAVEN_NAME")
-password = System.getenv("MAVEN_TOKEN")
-}
-}
+            maven {
+                name = "OSSRH"
+                url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+                credentials {
+                    username = System.getenv("MAVEN_NAME")
+                    password = System.getenv("MAVEN_TOKEN")
+                }
+            }
 //            maven {
 //                name = "LocalMaven"
 //                url = uri("$buildDir/maven")
@@ -89,8 +89,8 @@ password = System.getenv("MAVEN_TOKEN")
 //                            System.getenv("BUILD_MAVEN")
 //                    }
 //      }
-}
-}
+        }
+    }
 
 }
 

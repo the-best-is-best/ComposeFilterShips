@@ -7,11 +7,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ElevatedFilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.SelectableChipColors
 import androidx.compose.material3.SelectableChipElevation
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -41,38 +41,44 @@ fun<T> FilterChipsMultiSelector(
     elevation: SelectableChipElevation = FilterChipDefaults.elevatedFilterChipElevation(),
     border: BorderStroke? = null,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    textDisplay: (T)-> String
+    textDisplay: @Composable ( (T) -> Unit)
 
 ) {
     var selectedItems by rememberSaveable { mutableStateOf(listOf<T>()) }
-    FlowRow(
-        modifier = modifier,
-        horizontalArrangement = horizontalArrangement,
-        verticalArrangement = verticalArrangement,
-        maxItemsInEachRow = maxItemsInEachRow
-    ) {
-        listOfItems.forEach {
-            ElevatedFilterChip(
-                enabled = listOfItemsEnabled[listOfItems.indexOf(it)],
-                label = { Text(text = textDisplay(it)) },
-                onClick ={
-                    selectedItems = if(!selectedItems.contains(it)){
-                        selectedItems + it
-                    }else{
-                        selectedItems - it
-                    }
-                    isSelected(it, selectedItems.contains(it)) },
-                modifier = modifierContent.padding(horizontal = 10.dp),
-                selected = selectedItems.contains(it),
-                colors = colors,
-                shape =shape,
-                leadingIcon = leadingIcon,
-                trailingIcon = trailingIcon,
-                elevation =elevation,
-                border = border,
-                interactionSource = interactionSource
+    LazyColumn {
 
-            )
+        item {
+            FlowRow(
+                modifier = modifier,
+                horizontalArrangement = horizontalArrangement,
+                verticalArrangement = verticalArrangement,
+                maxItemsInEachRow = maxItemsInEachRow
+            ) {
+                listOfItems.forEach {
+                    ElevatedFilterChip(
+                        enabled = listOfItemsEnabled[listOfItems.indexOf(it)],
+                        label = { textDisplay(it) },
+                        onClick = {
+                            selectedItems = if (!selectedItems.contains(it)) {
+                                selectedItems + it
+                            } else {
+                                selectedItems - it
+                            }
+                            isSelected(it, selectedItems.contains(it))
+                        },
+                        modifier = modifierContent.padding(horizontal = 10.dp),
+                        selected = selectedItems.contains(it),
+                        colors = colors,
+                        shape = shape,
+                        leadingIcon = leadingIcon,
+                        trailingIcon = trailingIcon,
+                        elevation = elevation,
+                        border = border,
+                        interactionSource = interactionSource
+
+                    )
+                }
+            }
         }
     }
 

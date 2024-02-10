@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -55,7 +56,9 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
             }
             println("count is ${selectedItems.size} and selected items are $selectedItems")
         },
-        textDisplay = { it.name }
+        textDisplay = {
+            Text("Item ${it.id} ${it.name}")
+        }
     )
 
 }

@@ -24,7 +24,7 @@ afterEvaluate {
         publications.create<MavenPublication>("release") {
             groupId = "io.github.the-best-is-best"
             artifactId = "compose_filter_chips"
-            version = "1.0.1"
+            version = "1.0.3"
             from(components["release"])
 
 

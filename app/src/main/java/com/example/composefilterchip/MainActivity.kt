@@ -47,6 +47,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     FilterChipsMultiSelector(
         modifier = modifier,
         listOfItems = data,
+        defaultValue = data.take(5),
         isSelected = { item, isSelected ->
 
             selectedItems = if (isSelected) {

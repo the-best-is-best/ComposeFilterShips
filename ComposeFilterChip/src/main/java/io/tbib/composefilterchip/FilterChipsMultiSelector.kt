@@ -41,10 +41,17 @@ fun<T> FilterChipsMultiSelector(
     elevation: SelectableChipElevation = FilterChipDefaults.elevatedFilterChipElevation(),
     border: BorderStroke? = null,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    textDisplay: @Composable ( (T) -> Unit)
+    textDisplay: @Composable ( (T) -> Unit),
+    defaultValue:List<T>? = null
 
 ) {
+
     var selectedItems by rememberSaveable { mutableStateOf(listOf<T>()) }
+    var init by rememberSaveable { mutableStateOf(false) }
+    if (!init) {
+        selectedItems = defaultValue ?: listOf()
+        init = true
+    }
     LazyColumn {
 
         item {

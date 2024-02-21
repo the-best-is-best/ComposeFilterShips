@@ -8,14 +8,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.composefilterchip.ui.theme.ComposeFilterChipTheme
 import io.tbib.composefilterchip.FilterChipsMultiSelector
+import io.tbib.composefilterchip.rememberFilterChipsStates
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,19 +40,16 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     val data = List(1000) { index ->
         ExampleData(index + 1, "Item ${index + 1}")
     }
-    var selectedItems by remember { mutableStateOf(listOf<ExampleData>()) }
+    val selectedItemsState = rememberFilterChipsStates( value = data.take(5))
+
     FilterChipsMultiSelector(
         modifier = modifier,
         listOfItems = data,
-        defaultValue = data.take(5),
-        isSelected = { item, isSelected ->
+        state = selectedItemsState ,
 
-            selectedItems = if (isSelected) {
-                selectedItems + item
-            } else {
-                selectedItems - item
-            }
-            println("count is ${selectedItems.size} and selected items are $selectedItems")
+        isSelected = { _, _ ->
+
+            println("count is ${selectedItemsState.selectedItems.size} and selected items are ${selectedItemsState.selectedItems}")
         },
         textDisplay = {
             Text("Item ${it.id} ${it.name}")

@@ -6,6 +6,7 @@ plugins {
 android {
     namespace = "com.example.composefilterchip"
     compileSdk = 34
+    kotlinOptions.suppressWarnings = true
 
     defaultConfig {
         applicationId = "com.example.composefilterchip"
@@ -32,9 +33,11 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+        kotlinOptions.suppressWarnings = true
     }
     kotlinOptions {
         jvmTarget = "1.8"
+        kotlinOptions.suppressWarnings = true
     }
     buildFeatures {
         compose = true

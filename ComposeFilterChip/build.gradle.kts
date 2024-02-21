@@ -11,6 +11,7 @@ apply(plugin = "signing")
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+
 }
 
 
@@ -24,7 +25,7 @@ afterEvaluate {
         publications.create<MavenPublication>("release") {
             groupId = "io.github.the-best-is-best"
             artifactId = "compose_filter_chips"
-            version = "1.0.3"
+            version = "2.0.0"
             from(components["release"])
 
 
@@ -109,6 +110,8 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.8"
+        kotlinOptions.suppressWarnings = true
+
     }
     defaultConfig {
         minSdk = 21
@@ -129,6 +132,8 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+        kotlinOptions.suppressWarnings = true
+
     }
     kotlinOptions {
         jvmTarget = "1.8"

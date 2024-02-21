@@ -19,7 +19,39 @@ Compose Filter Chips is available on `mavenCentral()`.
 implementation("io.github.the-best-is-best:compose_filter_chips:1.0.0")
 ```
 
-## How to use
+## How to use v 2.0.0
+
+* Note: `rememberFilterChipsStates` is used to remember the state of the selected items.
+* Note: `defaultValue` is removed use state.
+
+```kotlin
+
+  data class ExampleData(
+        val id: Int,
+        val name: String
+    )
+    val data = List(1000) { index ->
+        ExampleData(index + 1, "Item ${index + 1}")
+    }
+    val selectedItemsState = rememberFilterChipsStates( value = data.take(5))
+
+    FilterChipsMultiSelector(
+        modifier = modifier,
+        listOfItems = data,
+        state = selectedItemsState ,
+
+        isSelected = { item, isSelected ->
+
+            println("count is ${selectedItemsState.selectedItems.size} and selected items are ${selectedItemsState.selectedItems}")
+        },
+        textDisplay = {
+            Text("Item ${it.id} ${it.name}")
+        }
+    )
+```
+
+
+## How to use v 1.0.0 to v 1.0.3
 
 ```kotlin
 data class ExampleData(

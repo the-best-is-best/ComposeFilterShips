@@ -1,6 +1,5 @@
 package io.tbib.composefilterchip
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -13,18 +12,14 @@ import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.SelectableChipColors
 import androidx.compose.material3.SelectableChipElevation
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalLayoutApi::class)
-@SuppressLint("RememberReturnType")
 @Composable
+@Suppress("defaultValue is not used and will be removed")
 fun<T> FilterChipsMultiSelector(
     modifier: Modifier = Modifier,
     modifierContent: Modifier = Modifier,
@@ -42,16 +37,12 @@ fun<T> FilterChipsMultiSelector(
     border: BorderStroke? = null,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     textDisplay: @Composable ( (T) -> Unit),
-    defaultValue:List<T>? = null
+    state: FilterChipsStates<T>
 
 ) {
 
-    var selectedItems by rememberSaveable { mutableStateOf(listOf<T>()) }
-    var init by rememberSaveable { mutableStateOf(false) }
-    if (!init) {
-        selectedItems = defaultValue ?: listOf()
-        init = true
-    }
+//    var selectedItems by remember { mutableStateOf(value ?: listOf()) }
+
     LazyColumn {
 
         item {
@@ -66,15 +57,16 @@ fun<T> FilterChipsMultiSelector(
                         enabled = listOfItemsEnabled[listOfItems.indexOf(it)],
                         label = { textDisplay(it) },
                         onClick = {
-                            selectedItems = if (!selectedItems.contains(it)) {
-                                selectedItems + it
+                            state.selectedItems = if (!state.selectedItems.contains(it)) {
+                                (state.selectedItems + it).toMutableList()
+
                             } else {
-                                selectedItems - it
+                                (state.selectedItems - it).toMutableList()
                             }
-                            isSelected(it, selectedItems.contains(it))
+                            isSelected(it, state.selectedItems.contains(it))
                         },
                         modifier = modifierContent.padding(horizontal = 10.dp),
-                        selected = selectedItems.contains(it),
+                        selected = state.selectedItems.contains(it),
                         colors = colors,
                         shape = shape,
                         leadingIcon = leadingIcon,

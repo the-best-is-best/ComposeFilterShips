@@ -50,6 +50,12 @@ implementation("io.github.the-best-is-best:compose_filter_chips:1.0.0")
     )
 ```
 
+- Can clear state 
+
+```kotlin
+     selectedItemsState.clear()
+```
+
 
 ## How to use v 1.0.0 to v 1.0.3
 
